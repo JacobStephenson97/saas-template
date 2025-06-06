@@ -5,9 +5,14 @@ import GitHubSignInButton from "./components/GitHubSignInButton";
 import SignOutButton from "./components/SignOutButton";
 import SpendCreditButton from "./components/SpendCreditButton";
 import SendEmailButton from "./components/SendEmailButton";
+import { PaymentForm } from "./components/payment/BuyCredits";
+import { getUser } from "@/lib/auth";
 
 export default async function Home() {
   const session = await getSession();
+  console.log("GETTING USER");
+  const user = await getUser(session?.user.id || "");
+  const credits = user?.credits;
 
   if (session) {
     return (
@@ -59,7 +64,7 @@ export default async function Home() {
                       Available Credits
                     </p>
                     <p className="text-3xl font-bold text-foreground">
-                      {session.user.credits}
+                      {credits}
                     </p>
                   </div>
                 </div>
@@ -77,8 +82,9 @@ export default async function Home() {
                 Quick Actions
               </h3>
               <div className="space-y-4">
-                <SpendCreditButton />
+                <SpendCreditButton credits={credits} />
                 <SendEmailButton />
+                <PaymentForm />
               </div>
             </div>
 

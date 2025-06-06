@@ -1,7 +1,8 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "./db";
+import { db, user } from "./db";
 import { anonymous } from "better-auth/plugins";
+import { eq } from "drizzle-orm";
 
 export const auth = betterAuth({
   user: {
@@ -31,3 +32,8 @@ export const auth = betterAuth({
     },
   },
 });
+export const getUser = async (id: string) => {
+  const [dbUser] = await db.select().from(user).where(eq(user.id, id));
+  return dbUser;
+};
+

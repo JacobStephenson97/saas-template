@@ -2,7 +2,7 @@
 import { authClient, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
-export default function SpendCreditButton() {
+export default function SpendCreditButton({ credits }: { credits: number }) {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -10,7 +10,7 @@ export default function SpendCreditButton() {
     try {
       if (!session) return;
       await authClient.updateUser({
-        credits: session.user.credits - 1,
+        credits: credits - 1,
       });
       router.refresh();
     } catch (error) {
@@ -22,9 +22,9 @@ export default function SpendCreditButton() {
     <button
       onClick={handleSpendCredit}
       className="w-full bg-primary hover:bg-primary/80 text-primary-foreground py-3 px-4 rounded-xl transition-all duration-200 hover:scale-105 font-medium"
-      disabled={!session || session.user.credits <= 0}
+      disabled={!session || credits <= 0}
     >
-      Spend 1 Credit ({session?.user.credits || 0} available)
+      Spend 1 Credit ({credits || 0} available)
     </button>
   );
 }
