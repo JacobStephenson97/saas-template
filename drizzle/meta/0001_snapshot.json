@@ -1,6 +1,6 @@
 {
-  "id": "54b753de-d306-4685-a3ad-1dceb396ad81",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "a7a452a6-7549-4a9d-8e74-f67a134c8953",
+  "prevId": "54b753de-d306-4685-a3ad-1dceb396ad81",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -243,6 +243,13 @@
           "type": "boolean",
           "primaryKey": false,
           "notNull": false
+        },
+        "credits": {
+          "name": "credits",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 10
         }
       },
       "indexes": {},
